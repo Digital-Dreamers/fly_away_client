@@ -17,6 +17,7 @@ function SearchFlight({ setFlights, flights }) {
         const fetchedFlights = await response.json()
         if(fetchedFlights.flights){
           setFlights(fetchedFlights.flights)
+          console.log(fetchedFlights.flights)
         }
       }
       // RDU, JFK, 2022-04-30, 5
