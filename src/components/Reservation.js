@@ -20,10 +20,6 @@ function Reservation() {
       setData(resData)
       setSeat(customerseat)
       setPassenger(resData.passenger)
-
-      console.log(passenger._id)
-      console.log(data._id)
-      console.log(resData)
     }
     fetchData()
   }, [reservationId.id, API_URL, API_URL_DELETE])
@@ -36,6 +32,10 @@ function Reservation() {
     deleteData()
     console.log('Deleted')
     navigate('/')
+  }
+
+  const handleUpdate = (e) => {
+    console.log('Updated')
   }
 
   return (
@@ -101,7 +101,12 @@ function Reservation() {
         >
           Delete
         </button>{' '}
-        <button className="btn btn-dark col-5 m-3">Update</button>
+        <button
+          onClick={(e) => handleUpdate(e)}
+          className="btn btn-dark col-5 m-3"
+        >
+          Update
+        </button>
       </div>
     </>
   )
