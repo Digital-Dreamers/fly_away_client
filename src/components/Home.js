@@ -17,11 +17,6 @@ function Home() {
           <h3 className='mt-2'>Search Flight</h3>
 
           <SearchFlight setFlights={setFlights} flights={flights} />
-          {flights.length > 0 ? <ul>{flights.map((flight, i) => {
-            return (
-              <li key={i}> {flight.flightNumber} </li>
-            )
-          })} </ul> : null}
         </Col>
       </Row>
       <Row className='mt-5'>
