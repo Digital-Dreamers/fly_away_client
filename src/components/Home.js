@@ -8,8 +8,6 @@ import SearchFlight from './subcomponents/SearchFlight'
 import Content from './subcomponents/Content'
 
 function Home() {
-  const [flights, setFlights] = useState([])
-
   return (
     <Container className='mt-5'>
       <Row className='border'>
