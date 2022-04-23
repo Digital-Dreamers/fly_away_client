@@ -10,6 +10,10 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 
 function App() {
+  // const [passengerData, setPassengerData] = useState('')
+  // useEffect(() => {
+  //   console.log(passengerData)
+  // }, [passengerData])
   return (
     <div className="App">
       <Router>
