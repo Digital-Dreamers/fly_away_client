@@ -15,9 +15,9 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/book-flight" element={<BookFlight />} />
-          <Route path="/reservation/:id" element={<Reservation />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/book-flight' element={<BookFlight />} />
+          <Route path='/reservation/:id' element={<Reservation />} />
         </Routes>
         <Footer />
       </Router>
