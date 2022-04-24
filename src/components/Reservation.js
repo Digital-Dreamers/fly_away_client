@@ -7,19 +7,19 @@ function Reservation() {
   const [passenger, setPassenger] = useState('')
   const reservationId = useParams()
   const navigate = useNavigate()
-  const API_URL = `http://localhost:3000/customers/reservations/${reservationId.id}`
-  const API_URL_DELETE = ` http://localhost:3000/customers/reservations/cancellation/${data._id}/${passenger._id}`
+  const API_URL = `http://localhost:10000/customers/reservations/${reservationId.id}`
+  const API_URL_DELETE = ` http://localhost:10000/customers/reservations/cancellation/${data._id}/${passenger._id}`
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(API_URL)
       const resData = await response.json()
-      const allSeats = resData.flightNumberId.seat
-      const passengerSeat = resData.seatNumber
-      let customerseat = allSeats.filter((seat) => seat._id === passengerSeat)
+      // const allSeats = resData.flightNumberId.seat
+      // const passengerSeat = resData.seatNumber
+      // let customerseat = allSeats.filter((seat) => seat._id === passengerSeat)
       setData(resData)
-      setSeat(customerseat)
-      setPassenger(resData.passenger)
+      // setSeat(customerseat)
+      setPassenger(resData.passengerId)
     }
     fetchData()
   }, [reservationId.id, API_URL, API_URL_DELETE])
