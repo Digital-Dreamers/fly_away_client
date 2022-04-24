@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { Col, Row } from 'react-bootstrap'
 
 function Reservation() {
   const [data, setData] = useState('')
   const [seat, setSeat] = useState('')
   const [seatId, setSeatId] = useState('')
   const [passenger, setPassenger] = useState('')
-  const [seatAvailable] = useState(true)
+  const [seatAvailable] = useState(false)
   const reservationId = useParams()
   const navigate = useNavigate()
   const API_URL = `http://localhost:3000/customers/reservations/${reservationId.id}`
@@ -42,68 +43,105 @@ function Reservation() {
       return response
     }
     updateSeat()
-    deleteData()
+    // deleteData()
 
-    navigate('/')
-  }
-
-  const handleUpdate = (e) => {
-    console.log('Updated')
+    // navigate('/')
   }
 
   return (
     <>
-      <h4 className="mt-5">Reservation Number</h4>
+      <h3 className="mt-5">Reservation Number</h3>
       <h6>{!data ? null : data._id}</h6>
       <main className="container">
         <h5 className="mt-5">Flight Infomation</h5>
         <div className="row g-3 mt-3">
-          <p className="col-12">
+          <Col xs={12}>
             {!data
               ? null
               : `Flight Number - ${data.flightNumberId.flightNumber}`}
-          </p>
-          <p className="col-6">
-            Departing From - {!data ? null : data.flightNumberId.departure}
-          </p>
-          <p className="col-6">
-            Arriving At - {!data ? null : data.flightNumberId.destination}
-          </p>
-          <p className="col-6">
-            Departure Date -{' '}
-            {!data ? null : data.flightNumberId.departureDate.slice(0, 7)}
-          </p>
-          <p className="col-6">
-            Arrival Date -{' '}
-            {!data ? null : data.flightNumberId.arrivalDate.slice(0, 7)}
-          </p>
-          <p className="col-6">
-            Depature Time - {!data ? null : data.flightNumberId.departureTime}
-          </p>
-          <p className="col-6">
-            Arrival Time - {!data ? null : data.flightNumberId.arrivalTime}
-          </p>
-          <p className="col-6">Seat Number - {!seat ? null : seat}</p>
-          <p className="col-6">Seat Class - Coach</p>
+          </Col>
+          <Col xs={12}>
+            <Row>
+              <Col xs={12} md={6}>
+                Departing From - {!data ? null : data.flightNumberId.departure}
+              </Col>
+              <Col xs={12} md={6}>
+                Arriving At - {!data ? null : data.flightNumberId.destination}
+              </Col>
+            </Row>
+          </Col>
+
+          <Col xs={12}>
+            <Row>
+              <Col xs={12} md={6}>
+                Departure Date -{' '}
+                {!data ? null : data.flightNumberId.departureDate.slice(0, 7)}
+              </Col>
+              <Col xs={12} md={6}>
+                Arrival Date -{' '}
+                {!data ? null : data.flightNumberId.arrivalDate.slice(0, 7)}
+              </Col>
+            </Row>
+          </Col>
+          {/*  */}
+          <Col xs={12}>
+            <Row>
+              <Col xs={12} md={6}>
+                {' '}
+                Depature Time -{' '}
+                {!data ? null : data.flightNumberId.departureTime}
+              </Col>
+              <Col xs={12} md={6}>
+                {' '}
+                Arrival Time - {!data ? null : data.flightNumberId.arrivalTime}
+              </Col>
+            </Row>
+          </Col>
+          <Col xs={12}>
+            <Row>
+              <Col xs={12} md={6}>
+                Seat Number - {!seat ? null : seat}
+              </Col>
+              <Col xs={12} md={6}>
+                Seat Class - Coach
+              </Col>
+            </Row>
+          </Col>
         </div>
       </main>
       <h5 className="mt-5">Passenger Information</h5>
       <section className="container mb-5">
         <div className="row g-3 mt-3">
-          <p className="col-6">
-            First Name - {!passenger ? null : passenger.firstName}{' '}
-          </p>
-          <p className="col-6">
-            Last Name - {!passenger ? null : passenger.lastName}{' '}
-          </p>
-          <p className="col-6">Age - {!passenger ? null : passenger.age} </p>
-          <p className="col-6">
-            Address - {!passenger ? null : passenger.address}{' '}
-          </p>
-          <p className="col-6">City - {!passenger ? null : passenger.city} </p>
-          <p className="col-6">
-            State - {!passenger ? null : passenger.state}{' '}
-          </p>
+          <Col xs={12}>
+            <Row>
+              <Col xs={12} md={6}>
+                First Name - {!passenger ? null : passenger.firstName}{' '}
+              </Col>
+              <Col xs={12} md={6}>
+                Last Name - {!passenger ? null : passenger.lastName}{' '}
+              </Col>
+            </Row>
+          </Col>
+          <Col xs={12}>
+            <Row>
+              <Col xs={12} md={6}>
+                Age - {!passenger ? null : passenger.age}
+              </Col>
+              <Col xs={12} md={6}>
+                Address - {!passenger ? null : passenger.address}{' '}
+              </Col>
+            </Row>
+          </Col>
+          <Col xs={12}>
+            <Row>
+              <Col xs={12} md={6}>
+                City - {!passenger ? null : passenger.city}
+              </Col>
+              <Col xs={12} md={6}>
+                State - {!passenger ? null : passenger.state}{' '}
+              </Col>
+            </Row>
+          </Col>
         </div>
       </section>
       <div className="container">
