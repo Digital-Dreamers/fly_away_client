@@ -14,12 +14,13 @@ function Reservation() {
     const fetchData = async () => {
       const response = await fetch(API_URL)
       const resData = await response.json()
-      const allSeats = resData.flightNumberId.seat
+      const allSeats = resData.flightNumberId.seats
       const passengerSeat = resData.seatNumber
       let customerseat = allSeats.filter((seat) => seat._id === passengerSeat)
+
       setData(resData)
       setSeat(customerseat)
-      setPassenger(resData.passenger)
+      setPassenger(resData.passengerId)
     }
     fetchData()
   }, [reservationId.id, API_URL, API_URL_DELETE])
@@ -57,7 +58,7 @@ function Reservation() {
             Arriving At - {!data ? null : data.flightNumberId.destination}
           </p>
           <p className="col-6">
-            Depature Date -{' '}
+            Departure Date -{' '}
             {!data ? null : data.flightNumberId.departureDate.slice(0, 7)}
           </p>
           <p className="col-6">
@@ -105,7 +106,7 @@ function Reservation() {
           onClick={(e) => handleUpdate(e)}
           className="btn btn-dark col-5 m-3"
         >
-          Update
+          Update Revervation
         </button>
       </div>
     </>
