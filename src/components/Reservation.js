@@ -4,21 +4,23 @@ import { useParams, useNavigate } from 'react-router-dom'
 function Reservation() {
   const [data, setData] = useState('')
   const [seat, setSeat] = useState('')
+  const [seatId, setSeatId] = useState('')
   const [passenger, setPassenger] = useState('')
+  const [seatAvailable] = useState(true)
   const reservationId = useParams()
   const navigate = useNavigate()
   const API_URL = `http://localhost:3000/customers/reservations/${reservationId.id}`
-  const API_URL_DELETE = ` http://localhost:10000/customers/reservations/cancellation/${data._id}/${passenger._id}`
+  const API_URL_DELETE = ` http://localhost:3000/customers/reservations/cancellation/${data._id}/${passenger._id}`
+  const API_URL_UPDATE_SEAT = `http://localhost:3000/customers/update-old-seat`
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(API_URL)
       const resData = await response.json()
-      // const allSeats = resData.flightNumberId.seat
-      // const passengerSeat = resData.seatNumber
-      // let customerseat = allSeats.filter((seat) => seat._id === passengerSeat)
+
+      setSeatId(resData.seatNumberId)
+      setSeat(resData.seatNumberId.seatNumber)
       setData(resData)
-      // setSeat(customerseat)
       setPassenger(resData.passengerId)
     }
     fetchData()
@@ -29,6 +31,17 @@ function Reservation() {
       const response = await fetch(API_URL_DELETE, { method: 'DELETE' })
       return response
     }
+
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ oldSeatId: seatId, available: seatAvailable }),
+    }
+    const updateSeat = async () => {
+      const response = await fetch(API_URL_UPDATE_SEAT, requestOptions)
+      return response
+    }
+    updateSeat()
     deleteData()
     console.log('Deleted')
     navigate('/')
@@ -70,7 +83,7 @@ function Reservation() {
           <p className="col-6">
             Arrival Time - {!data ? null : data.flightNumberId.arrivalTime}
           </p>
-          <p className="col-6">Seat Number - {!seat ? null : seat[0].number}</p>
+          <p className="col-6">Seat Number - {!seat ? null : seat}</p>
           <p className="col-6">Seat Class - Coach</p>
         </div>
       </main>
@@ -101,12 +114,6 @@ function Reservation() {
         >
           Delete
         </button>{' '}
-        <button
-          onClick={(e) => handleUpdate(e)}
-          className="btn btn-dark col-5 m-3"
-        >
-          Update Revervation
-        </button>
       </div>
     </>
   )
