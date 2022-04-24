@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import Button from 'react-bootstrap/Button'
 
-function SearchFlight({ setFlights, flights }) {
+//import context
+import { GlobalContext } from '../helpers/GlobalContext'
+
+function SearchFlight() {
+  let navigate = useNavigate()
+  // import global states
+  const { setFlights } = useContext(GlobalContext)
+
   // departure, destination, departureDate, numberOfSeats
   const [departure, setDeparture] = useState('')
   const [destination, setDestination] = useState('')
@@ -13,11 +21,11 @@ function SearchFlight({ setFlights, flights }) {
   const [numberOfSeats, setNumberOfSeats] = useState('')
 
   const getData = async () => {
-        const response = await fetch(`http://localhost:3000/customers/search?departure=${departure}&destination=${destination}&departureDate=${departureDate}&numberOfSeats=${numberOfSeats}`)
+        const response = await fetch(`http://localhost:3000/customers/search?departure=${departure.toUpperCase()}&destination=${destination.toUpperCase()}&departureDate=${departureDate}&numberOfSeats=${numberOfSeats}`)
         const fetchedFlights = await response.json()
         if(fetchedFlights.flights){
           setFlights(fetchedFlights.flights)
-          console.log(fetchedFlights.flights)
+          navigate('/results')
         }
       }
       // RDU, JFK, 2022-04-30, 5
