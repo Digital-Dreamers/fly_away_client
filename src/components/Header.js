@@ -1,9 +1,9 @@
+
 import React, { useState } from "react";
 import { Navbar, Nav, Container, Button, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 function Header() {
     let navigate = useNavigate()
-    // const [query, setquery] = useState('')
     const [reservationNumber, setReservationNumber] = useState('')
 
     return (
