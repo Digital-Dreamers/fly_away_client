@@ -7,7 +7,7 @@ function Reservation() {
   const [passenger, setPassenger] = useState('')
   const reservationId = useParams()
   const navigate = useNavigate()
-  const API_URL = `http://localhost:10000/customers/reservations/${reservationId.id}`
+  const API_URL = `http://localhost:3000/customers/reservations/${reservationId.id}`
   const API_URL_DELETE = ` http://localhost:10000/customers/reservations/cancellation/${data._id}/${passenger._id}`
 
   useEffect(() => {
@@ -57,7 +57,7 @@ function Reservation() {
             Arriving At - {!data ? null : data.flightNumberId.destination}
           </p>
           <p className="col-6">
-            Depature Date -{' '}
+            Departure Date -{' '}
             {!data ? null : data.flightNumberId.departureDate.slice(0, 7)}
           </p>
           <p className="col-6">
@@ -105,7 +105,7 @@ function Reservation() {
           onClick={(e) => handleUpdate(e)}
           className="btn btn-dark col-5 m-3"
         >
-          Update
+          Update Revervation
         </button>
       </div>
     </>
