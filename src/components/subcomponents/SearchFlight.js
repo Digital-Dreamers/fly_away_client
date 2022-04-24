@@ -1,26 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 
-function SearchFlight({ setFlights, flights }) {
+//import context
+import { GlobalContext } from '../helpers/GlobalContext'
+
+function SearchFlight() {
+  let navigate = useNavigate()
+  // import global states
+  const { setFlights } = useContext(GlobalContext)
+
   // departure, destination, departureDate, numberOfSeats
   const [departure, setDeparture] = useState('')
   const [destination, setDestination] = useState('')
   const [departureDate, setDepartureDate] = useState('')
   const [numberOfSeats, setNumberOfSeats] = useState('')
+  const [flightNotFound, setFlightNotFound] = useState(false)
 
   const getData = async () => {
-        const response = await fetch(`http://localhost:3000/customers/search?departure=${departure}&destination=${destination}&departureDate=${departureDate}&numberOfSeats=${numberOfSeats}`)
+        const response = await fetch(`http://localhost:3000/customers/search?departure=${departure.toUpperCase()}&destination=${destination.toUpperCase()}&departureDate=${departureDate}&numberOfSeats=${numberOfSeats}`)
         const fetchedFlights = await response.json()
         if(fetchedFlights.flights){
           setFlights(fetchedFlights.flights)
-          console.log(fetchedFlights.flights)
+          navigate('/results')
+          return
         }
+        setFlightNotFound(true)
+        setTimeout(() => setFlightNotFound(false), 2500)
       }
-      // RDU, JFK, 2022-04-30, 5
 
   return (
     <Form className='mt-3' onSubmit={ (e)=>{
@@ -28,6 +40,7 @@ function SearchFlight({ setFlights, flights }) {
       getData()
     }}>
       <Form.Group controlId='search-flight'>
+        {flightNotFound ? <Alert variant="danger">No Flights Found!</Alert> : null}
         <Row>
           <Col sm={6} md={3} className='my-3' >
             <FloatingLabel controlId='departure' label='Leaving from'>
@@ -47,7 +60,7 @@ function SearchFlight({ setFlights, flights }) {
           </Col>
           <Col sm={6} md={3} className='my-3'>
             <FloatingLabel controlId='number-of-seats' label='Travelers:'>
-              <Form.Control type='number' min='1' max='6' placeholder='1' inputMode="numeric"   onChange={(e)=> { setNumberOfSeats(e.target.value) }} required/>
+              <Form.Control type='number' min='1' max='10' placeholder='1' inputMode="numeric"   onChange={(e)=> { setNumberOfSeats(e.target.value) }} required/>
             </FloatingLabel>
           </Col>
         </Row>
