@@ -43,8 +43,8 @@ function Reservation() {
       return response
     }
     updateSeat()
+    console.log('updated')
     // deleteData()
-
     // navigate('/')
   }
 
