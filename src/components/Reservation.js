@@ -20,7 +20,7 @@ function Reservation() {
       const resData = await response.json()
 
       setSeatId(resData.seatNumberId)
-      setSeat(resData.seatNumberId.seatNumber)
+      setSeat(resData.seatNumberId)
       setData(resData)
       setPassenger(resData.passengerId)
     }
@@ -46,6 +46,10 @@ function Reservation() {
     console.log('updated')
     deleteData()
     navigate('/')
+  }
+  const upperCase = (word) => {
+    let upper = word.charAt(0).toUpperCase() + word.slice(1)
+    return upper
   }
 
   return (
@@ -100,10 +104,10 @@ function Reservation() {
           <Col xs={12}>
             <Row>
               <Col xs={12} md={6}>
-                Seat Number - {!seat ? null : seat}
+                Seat Number - {!seat ? null : seat.seatNumber}
               </Col>
               <Col xs={12} md={6}>
-                Seat Class - Coach
+                Seat Class - {!seat ? null : upperCase(seat.seatClass)}
               </Col>
             </Row>
           </Col>
