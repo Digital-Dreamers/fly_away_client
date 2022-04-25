@@ -7,12 +7,12 @@ function Reservation() {
   const [seat, setSeat] = useState('')
   const [seatId, setSeatId] = useState('')
   const [passenger, setPassenger] = useState('')
-  const [seatAvailable] = useState(false)
+  const [seatAvailable] = useState(true)
   const reservationId = useParams()
   const navigate = useNavigate()
-  const API_URL = `http://localhost:3000/customers/reservations/${reservationId.id}`
-  const API_URL_DELETE = ` http://localhost:3000/customers/reservations/cancellation/${data._id}/${passenger._id}`
-  const API_URL_UPDATE_SEAT = `http://localhost:3000/customers/update-old-seat`
+  const API_URL = `https://fly-away-api.herokuapp.com/reservations/${reservationId.id}`
+  const API_URL_DELETE = ` https://fly-away-api.herokuapp.com/reservations/cancellation/${data._id}/${passenger._id}`
+  const API_URL_UPDATE_SEAT = `https://fly-away-api.herokuapp.com/update-old-seat`
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,7 @@ function Reservation() {
       const resData = await response.json()
 
       setSeatId(resData.seatNumberId)
-      setSeat(resData.seatNumberId.seatNumber)
+      setSeat(resData.seatNumberId)
       setData(resData)
       setPassenger(resData.passengerId)
     }
@@ -44,8 +44,12 @@ function Reservation() {
     }
     updateSeat()
     console.log('updated')
-    // deleteData()
-    // navigate('/')
+    deleteData()
+    navigate('/')
+  }
+  const upperCase = (word) => {
+    let upper = word.charAt(0).toUpperCase() + word.slice(1)
+    return upper
   }
 
   return (
@@ -100,10 +104,10 @@ function Reservation() {
           <Col xs={12}>
             <Row>
               <Col xs={12} md={6}>
-                Seat Number - {!seat ? null : seat}
+                Seat Number - {!seat ? null : seat.seatNumber}
               </Col>
               <Col xs={12} md={6}>
-                Seat Class - Coach
+                Seat Class - {!seat ? null : upperCase(seat.seatClass)}
               </Col>
             </Row>
           </Col>
