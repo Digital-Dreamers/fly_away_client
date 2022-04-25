@@ -34,9 +34,9 @@ function BookFlight() {
     seatNumberId,
   } = formData
 
-  const API_URL_GET_SEATS = `http://localhost:3000/customers/search/flight/available-seats/${flights.selectedFlight._id}`
-  const API_URL_BOOK_RESERVATION = `http://localhost:3000/customers/book`
-  const API_URL_UPDATE_SEAT = `http://localhost:3000/customers/update-old-seat`
+  const API_URL_GET_SEATS = `https://fly-away-api.herokuapp.com/customers/search/flight/available-seats/${flights.selectedFlight._id}`
+  const API_URL_BOOK_RESERVATION = `https://fly-away-api.herokuapp.com/customers/book`
+  const API_URL_UPDATE_SEAT = `https://fly-away-api.herokuapp.com/customers/update-old-seat`
 
   const availableSeats = () => {
     if (allAvailableSeats) {

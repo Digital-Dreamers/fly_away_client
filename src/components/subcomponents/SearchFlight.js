@@ -23,54 +23,91 @@ function SearchFlight() {
   const [flightNotFound, setFlightNotFound] = useState(false)
 
   const getData = async () => {
-        const response = await fetch(`http://localhost:3000/customers/search?departure=${departure.toUpperCase()}&destination=${destination.toUpperCase()}&departureDate=${departureDate}&numberOfSeats=${numberOfSeats}`)
-        const fetchedFlights = await response.json()
-        if(fetchedFlights.flights){
-          setFlights(fetchedFlights.flights)
-          navigate('/results')
-          return
-        }
-        setFlightNotFound(true)
-        setTimeout(() => setFlightNotFound(false), 2500)
-      }
+    const response = await fetch(
+      `https://fly-away-api.herokuapp.com/customers/search?departure=${departure.toUpperCase()}&destination=${destination.toUpperCase()}&departureDate=${departureDate}&numberOfSeats=${numberOfSeats}`
+    )
+    const fetchedFlights = await response.json()
+    if (fetchedFlights.flights) {
+      setFlights(fetchedFlights.flights)
+      navigate('/results')
+      return
+    }
+    setFlightNotFound(true)
+    setTimeout(() => setFlightNotFound(false), 2500)
+  }
 
   return (
-    <Form className='mt-3' onSubmit={ (e)=>{
-      e.preventDefault()
-      getData()
-    }}>
-      <Form.Group controlId='search-flight'>
-        {flightNotFound ? <Alert variant="danger">No Flights Found!</Alert> : null}
+    <Form
+      className="mt-3"
+      onSubmit={(e) => {
+        e.preventDefault()
+        getData()
+      }}
+    >
+      <Form.Group controlId="search-flight">
+        {flightNotFound ? (
+          <Alert variant="danger">No Flights Found!</Alert>
+        ) : null}
         <Row>
-          <Col sm={6} md={3} className='my-3' >
-            <FloatingLabel controlId='departure' label='Leaving from'>
-              <Form.Control type='text' onChange={(e)=> { setDeparture(e.target.value) }}  required/>
-            </FloatingLabel>
-
-          </Col>
-          <Col sm={6} md={3} className='my-3' >
-            <FloatingLabel controlId='destination' label='Going to'>
-              <Form.Control type='text'  onChange={(e)=> { setDestination(e.target.value) }} value={destination} required/>
-            </FloatingLabel>
-          </Col>
-          <Col sm={6} md={3} className='my-3'>
-            <FloatingLabel controlId='departure-date' label='Departing'>
-              <Form.Control type='date'  onChange={(e)=> { setDepartureDate(e.target.value) }} required/>
+          <Col sm={6} md={3} className="my-3">
+            <FloatingLabel controlId="departure" label="Leaving from">
+              <Form.Control
+                type="text"
+                onChange={(e) => {
+                  setDeparture(e.target.value)
+                }}
+                required
+              />
             </FloatingLabel>
           </Col>
-          <Col sm={6} md={3} className='my-3'>
-            <FloatingLabel controlId='number-of-seats' label='Travelers:'>
-              <Form.Control type='number' min='1' max='10' placeholder='1' inputMode="numeric"   onChange={(e)=> { setNumberOfSeats(e.target.value) }} required/>
+          <Col sm={6} md={3} className="my-3">
+            <FloatingLabel controlId="destination" label="Going to">
+              <Form.Control
+                type="text"
+                onChange={(e) => {
+                  setDestination(e.target.value)
+                }}
+                value={destination}
+                required
+              />
+            </FloatingLabel>
+          </Col>
+          <Col sm={6} md={3} className="my-3">
+            <FloatingLabel controlId="departure-date" label="Departing">
+              <Form.Control
+                type="date"
+                onChange={(e) => {
+                  setDepartureDate(e.target.value)
+                }}
+                required
+              />
+            </FloatingLabel>
+          </Col>
+          <Col sm={6} md={3} className="my-3">
+            <FloatingLabel controlId="number-of-seats" label="Travelers:">
+              <Form.Control
+                type="number"
+                min="1"
+                max="10"
+                placeholder="1"
+                inputMode="numeric"
+                onChange={(e) => {
+                  setNumberOfSeats(e.target.value)
+                }}
+                required
+              />
             </FloatingLabel>
           </Col>
         </Row>
         <Row>
-          <Col xs={12} className='my-3'>
-              <Button variant='primary' type='submit'>Submit</Button>
+          <Col xs={12} className="my-3">
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
           </Col>
         </Row>
       </Form.Group>
-    </Form >
+    </Form>
   )
 }
 
