@@ -7,7 +7,7 @@ function Reservation() {
   const [seat, setSeat] = useState('')
   const [seatId, setSeatId] = useState('')
   const [passenger, setPassenger] = useState('')
-  const [seatAvailable] = useState(false)
+  const [seatAvailable] = useState(true)
   const reservationId = useParams()
   const navigate = useNavigate()
   const API_URL = `http://localhost:3000/customers/reservations/${reservationId.id}`
@@ -44,8 +44,8 @@ function Reservation() {
     }
     updateSeat()
     console.log('updated')
-    // deleteData()
-    // navigate('/')
+    deleteData()
+    navigate('/')
   }
 
   return (
