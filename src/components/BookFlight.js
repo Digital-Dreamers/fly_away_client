@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import { GlobalContext } from './helpers/GlobalContext'
-import Reservation from './Reservation'
 
 function BookFlight() {
   const flights = useContext(GlobalContext)
