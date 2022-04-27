@@ -184,7 +184,7 @@ function BookFlight() {
                   </Col>
                 </Row>
                 <Row>
-                  <Form.Group className="my-3" as={Col} md={2}>
+                  <Form.Group className="my-3" as={Col} md={3}>
                     <Form.Label>State</Form.Label>
                     <Form.Select
                       onChange={onChange}
