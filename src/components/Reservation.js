@@ -42,8 +42,8 @@ function Reservation() {
       const response = await fetch(API_URL_UPDATE_SEAT, requestOptions)
       return response
     }
+
     updateSeat()
-    console.log('updated')
     deleteData()
     navigate('/')
   }

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-// import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import { GlobalContext } from './helpers/GlobalContext'
@@ -8,7 +8,7 @@ function BookFlight() {
   const flights = useContext(GlobalContext)
   const [allAvailableSeats, setAllAvailableSeats] = useState('')
   const [seatAvailable] = useState(false)
-
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -20,7 +20,6 @@ function BookFlight() {
     flightNumberId: flights.selectedFlight._id,
     seatNumberId: '',
   })
-
   const {
     firstName,
     lastName,
@@ -78,10 +77,16 @@ function BookFlight() {
     const bookFlight = async () => {
       const response = await fetch(API_URL_BOOK_RESERVATION, requestBooking)
       const resData = await response.json()
+      const id = resData.reservation._id
 
-      console.log(resData)
-      return response
+      console.log(resData.reservation._id)
+      console.log(id)
+
+      navigate(`/reservation/${id}`)
+
+      return resData
     }
+
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -94,11 +99,9 @@ function BookFlight() {
       const response = await fetch(API_URL_UPDATE_SEAT, requestOptions)
       return response
     }
-    // Add use navigate to go back to reservation page
-    // navigate('/')
+
     updateSeat()
     bookFlight()
-    console.log('Submit clicked')
   }
 
   useEffect(() => {
@@ -106,10 +109,9 @@ function BookFlight() {
       const response = await fetch(API_URL_GET_SEATS)
       const resData = await response.json()
       setAllAvailableSeats(resData.seats)
-      console.log(resData.seats)
     }
     fetchData()
-  }, [])
+  }, [API_URL_GET_SEATS])
 
   return (
     <div>
@@ -304,7 +306,7 @@ function BookFlight() {
               </Col>
             </Row>
           </Col>
-          {/*  */}
+
           <Col xs={12}>
             <Row>
               <Col className="mt-5" xs={12} md={6}>
