@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 // import { useParams, useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
-import { Form, Row, Col, Option, Button } from 'react-bootstrap'
-import SearchFlight from './subcomponents/SearchFlight'
+import { Form, Row, Col, Button } from 'react-bootstrap'
 import { GlobalContext } from './helpers/GlobalContext'
 
 function BookFlight() {
@@ -30,7 +29,6 @@ function BookFlight() {
     city,
     state,
     reservationNumber,
-    flightNumberId,
     seatNumberId,
   } = formData
 
@@ -311,7 +309,7 @@ function BookFlight() {
             <Row>
               <Col className="mt-5" xs={12} md={6}>
                 {' '}
-                Depature Time -{' '}
+                Departure Time -{' '}
                 {!flights ? null : flights.selectedFlight.departureTime}
               </Col>
               <Col className="mt-5" xs={12} md={6}>
