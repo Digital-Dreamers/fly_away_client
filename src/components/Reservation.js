@@ -53,12 +53,11 @@ function Reservation() {
     setTimeout(() => {
       handleClose()
       navigate('/')
-    }, 2500)
+    }, 3000)
   }
 
   const handleShow = () => {
     setShow(true)
-    console.log('delete clicked')
   }
   const handleClose = () => setShow(false)
 
@@ -77,7 +76,11 @@ function Reservation() {
                   <Modal.Title>Cancel Reservation?</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <h5>You are about to cancel Reservation:</h5> <br />
+                  <h5>
+                    {passenger.firstName}, you are about to cancel your
+                    reservation:
+                  </h5>{' '}
+                  <br />
                   {data._id}
                 </Modal.Body>
               </>
