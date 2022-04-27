@@ -31,9 +31,9 @@ function BookFlight() {
     seatNumberId,
   } = formData
 
-  const API_URL_GET_SEATS = `https://fly-away-api.herokuapp.com/customers/search/flight/available-seats/${flights.selectedFlight._id}`
-  const API_URL_BOOK_RESERVATION = `https://fly-away-api.herokuapp.com/customers/book`
-  const API_URL_UPDATE_SEAT = `https://fly-away-api.herokuapp.com/customers/update-old-seat`
+  const API_URL_GET_SEATS = `http://localhost:3000/customers/search/flight/available-seats/${flights.selectedFlight._id}`
+  const API_URL_BOOK_RESERVATION = `http://localhost:3000/customers/book`
+  const API_URL_UPDATE_SEAT = `http://localhost:3000/customers/update-old-seat`
 
   const availableSeats = () => {
     if (allAvailableSeats) {
@@ -184,81 +184,7 @@ function BookFlight() {
                   </Col>
                 </Row>
                 <Row>
-                  {' '}
-                  {/* <Col>
-                    <Col sm={10} md={2} className=" mx-2 my-3">
-                      <Form.Label>State</Form.Label>
-                      <Row>
-                        <Form.Select
-                          placeholder="State"
-                          onChange={onChange}
-                          name="state"
-                          type="text"
-                          aria-label="Default select example"
-                        >
-                          <option>Select State</option>
-                          <option value="AK">Alaska</option>
-                          <option value="AL">Alabama</option>
-                          <option value="AK">Alaska</option>
-                          <option value="AZ">Arizona</option>
-                          <option value="AR">Arkansas</option>
-                          <option value="CA">California</option>
-                          <option value="CT">Connecticut</option>
-                          <option value="CO">Colorado</option>
-                          <option value="DE">Delaware</option>
-                          <option value="FL">Florida</option>
-                          <option value="GA">Georgia</option>
-                          <option value="HI">Hawaii</option>
-                          <option value="IA">Iowa</option>
-                          <option value="ID">Idaho</option>
-                          <option value="IL">Illinois</option>
-                          <option value="IN">Indiana</option>
-                          <option value="KY">Kentucky</option>
-                          <option value="LA">Louisiana</option>
-                          <option value="MA">Massachussets</option>
-                          <option value="MD">Maryland</option>
-                          <option value="ME">Maine</option>
-                          <option value="MI">Michigan</option>
-                          <option value="MN">Minnesota</option>
-                          <option value="MO">Missouri</option>
-                          <option value="MS">Mississippi</option>
-                          <option value="MT">Montana</option>
-                          <option value="NC">North Carolina</option>
-                          <option value="ND">North Dakota</option>
-                          <option value="NE">Nebraska</option>
-                          <option value="NH">New Hampshire</option>
-                          <option value="NJ">New Jersey</option>
-                          <option value="NM">New Mexico</option>
-                          <option value="NV">Nevada</option>
-                          <option value="NY">New York</option>
-                          <option value="OH">Ohio</option>
-                          <option value="OK">Oklahoma</option>
-                          <option value="OR">Oregon</option>
-                          <option value="PA">Pennsylvania</option>
-                          <option value="RI">Rhode Island</option>
-                          <option value="SC">South Carolina</option>
-                          <option value="SD">South Dakota</option>
-                          <option value="TN">Tennessee</option>
-                          <option value="TX">Texas</option>
-                          <option value="UT">Utah</option>
-                          <option value="VA">Virginia</option>
-                          <option value="VT">Vermont</option>
-                          <option value="WA">Washington</option>
-                          <option value="WI">Wisconsin</option>
-                          <option value="WV">West Virginia</option>
-                          <option value="WY">Wyoming</option>
-                        </Form.Select>
-                      </Row>
-                    </Col>
-                  </Col> */}
-                  {/*  */}
-                  <Form.Group
-                    className="my-3"
-                    as={Col}
-                    md={2}
-
-                    // controlId="formGridState"
-                  >
+                  <Form.Group className="my-3" as={Col} md={2}>
                     <Form.Label>State</Form.Label>
                     <Form.Select
                       onChange={onChange}
@@ -340,69 +266,72 @@ function BookFlight() {
               <h3 className="mt-2">Flight Details</h3>
             </Col>
           </Row>
-          <Col className="mt-5" xs={12}>
-            {!flights
-              ? null
-              : `Flight Number - ${flights.selectedFlight.flightNumber}`}
-          </Col>
-          <Col xs={12}>
-            <Row>
-              <Col className="mt-5" xs={12} md={6}>
-                Departing From -{' '}
-                {!flights ? null : flights.selectedFlight.departure}
-              </Col>
-              <Col className="mt-5" xs={12} md={6}>
-                Arriving At -{' '}
-                {!flights ? null : flights.selectedFlight.destination}
-              </Col>
-            </Row>
-          </Col>
-          <Col xs={12}>
-            <Row>
-              <Col className="mt-5" xs={12} md={6}>
-                Departure Date -{' '}
-                {!flights
-                  ? null
-                  : flights.selectedFlight.departureDate.slice(0, 7)}
-              </Col>
-              <Col className="mt-5" xs={12} md={6}>
-                Arrival Date -{' '}
-                {!flights
-                  ? null
-                  : flights.selectedFlight.arrivalDate.slice(0, 7)}
-              </Col>
-            </Row>
-          </Col>
-
-          <Col xs={12}>
-            <Row>
-              <Col className="mt-5" xs={12} md={6}>
-                {' '}
-                Departure Time -{' '}
-                {!flights ? null : flights.selectedFlight.departureTime}
-              </Col>
-              <Col className="mt-5" xs={12} md={6}>
-                {' '}
-                Arrival Time -{' '}
-                {!flights ? null : flights.selectedFlight.arrivalTime}
-              </Col>
-            </Row>
-          </Col>
-          <Col xs={12}>
-            <Col className="mt-5 " xs={12} md={12}>
-              Select Seat Number
+          <Container className="border mt-5">
+            <Col className="mt-5" xs={12}>
+              {!flights
+                ? null
+                : `Flight Number - ${flights.selectedFlight.flightNumber}`}
+            </Col>
+            <Col xs={12}>
               <Row>
-                <Form.Select
-                  onChange={onChange}
-                  name="seatNumberId"
-                  aria-label="Default select example"
-                >
-                  <option>Select Seat</option>
-                  {availableSeats()}
-                </Form.Select>
+                <Col className="mt-5" xs={12} md={6}>
+                  Departing From -{' '}
+                  {!flights ? null : flights.selectedFlight.departure}
+                </Col>
+                <Col className="mt-5" xs={12} md={6}>
+                  Arriving At -{' '}
+                  {!flights ? null : flights.selectedFlight.destination}
+                </Col>
               </Row>
             </Col>
-          </Col>
+            <Col xs={12}>
+              <Row>
+                <Col className="mt-5" xs={12} md={6}>
+                  Departure Date -{' '}
+                  {!flights
+                    ? null
+                    : flights.selectedFlight.departureDate.slice(0, 7)}
+                </Col>
+                <Col className="mt-5" xs={12} md={6}>
+                  Arrival Date -{' '}
+                  {!flights
+                    ? null
+                    : flights.selectedFlight.arrivalDate.slice(0, 7)}
+                </Col>
+              </Row>
+            </Col>
+
+            <Col xs={12}>
+              <Row>
+                <Col className="mt-5" xs={12} md={6}>
+                  {' '}
+                  Departure Time -{' '}
+                  {!flights ? null : flights.selectedFlight.departureTime}
+                </Col>
+                <Col className="mt-5" xs={12} md={6}>
+                  {' '}
+                  Arrival Time -{' '}
+                  {!flights ? null : flights.selectedFlight.arrivalTime}
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={12}>
+              <Col className="mt-5 mb-5 container " xs={6} sm={12} md={2}>
+                <Form.Label>Select Seat Number</Form.Label>
+
+                <Row xs={6} sm={6} md={4}>
+                  <Form.Select
+                    onChange={onChange}
+                    name="seatNumberId"
+                    aria-label="Default select example"
+                  >
+                    <option>Select Seat</option>
+                    {availableSeats()}
+                  </Form.Select>
+                </Row>
+              </Col>
+            </Col>
+          </Container>
           <Button className="m-5" type="submit">
             Submit
           </Button>
