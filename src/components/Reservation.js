@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row, Modal, Button } from 'react-bootstrap'
+import { upperCase } from '../utilities/utility_functions'
 
 function Reservation() {
   const [data, setData] = useState('')
@@ -8,11 +9,15 @@ function Reservation() {
   const [seatId, setSeatId] = useState('')
   const [passenger, setPassenger] = useState('')
   const [seatAvailable] = useState(true)
+  const [show, setShow] = useState(false)
+  const [cancel, setCancel] = useState(false)
+
   const reservationId = useParams()
   const navigate = useNavigate()
   const API_URL = `https://fly-away-api.herokuapp.com/customers/reservations/${reservationId.id}`
-  const API_URL_DELETE = ` https://fly-away-api.herokuapp.com/customers/reservations/cancellation/${data._id}/${passenger._id}`
-  const API_URL_UPDATE_SEAT = `https://fly-away-api.herokuapp.com/cutomers/update-old-seat`
+  const API_URL_DELETE = `https://fly-away-api.herokuapp.com/customers/reservations/cancellation/${data._id}/${passenger._id}`
+  const API_URL_UPDATE_SEAT = `https://fly-away-api.herokuapp.com/customers/update-old-seat`
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +30,7 @@ function Reservation() {
       setPassenger(resData.passengerId)
     }
     fetchData()
-  }, [reservationId.id, API_URL, API_URL_DELETE])
+  }, [reservationId.id, API_URL, API_URL_DELETE, seatAvailable])
 
   const handleDelete = (e) => {
     const deleteData = async () => {
@@ -43,14 +48,19 @@ function Reservation() {
       return response
     }
 
+    setCancel(true)
     updateSeat()
     deleteData()
-    navigate('/')
+    setTimeout(() => {
+      handleClose()
+      navigate('/')
+    }, 3000)
   }
-  const upperCase = (word) => {
-    let upper = word.charAt(0).toUpperCase() + word.slice(1)
-    return upper
+
+  const handleShow = () => {
+    setShow(true)
   }
+  const handleClose = () => setShow(false)
 
   return (
     <>
@@ -59,6 +69,39 @@ function Reservation() {
       <main className="container">
         <h5 className="mt-5">Flight Infomation</h5>
         <div className="row g-3 mt-3">
+          <Modal show={show} onHide={handleClose}>
+            {!cancel ? (
+              <>
+                <Modal.Header closeButton>
+                  {' '}
+                  <Modal.Title>Cancel Reservation?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <h5>
+                    {passenger.firstName}, you are about to cancel your
+                    reservation:
+                  </h5>{' '}
+                  <br />
+                  {data._id}
+                </Modal.Body>
+              </>
+            ) : (
+              <Modal.Body>
+                <h5>Reservation Deleted</h5> <br />
+                {data._id}
+              </Modal.Body>
+            )}
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="dark" onClick={handleDelete}>
+                Cancel Reservation
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
           <Col xs={12}>
             {!data
               ? null
@@ -151,10 +194,10 @@ function Reservation() {
       <div className="container">
         {' '}
         <button
-          onClick={(e) => handleDelete(e)}
+          onClick={(e) => handleShow()}
           className="btn btn-dark col-5 m-3"
         >
-          Delete
+          Cancel Reservation
         </button>{' '}
       </div>
     </>

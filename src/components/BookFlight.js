@@ -79,9 +79,6 @@ function BookFlight() {
       const resData = await response.json()
       const id = resData.reservation._id
 
-      console.log(resData.reservation._id)
-      console.log(id)
-
       navigate(`/reservation/${id}`)
 
       return resData
