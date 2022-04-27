@@ -15,21 +15,24 @@ function Results() {
   const [filteredFlights, setFilteredFlights] = useState([])
   let navigate = useNavigate()
 
-
   useEffect(() => {
-    if(flights.length > 0){
+    if (flights.length > 0) {
       flights.forEach(async (flight, index) => {
-        const response = await fetch(`https://fly-away-api.herokuapp.com/customers/search/flight/available-seats/${flight._id}`)
+        const response = await fetch(
+          `https://fly-away-api.herokuapp.com/customers/search/flight/available-seats/${flight._id}`
+        )
         const parsedRes = await response.json()
-        const seatsArr = parsedRes.seats.filter(seat => seat.available === true)
-        if(seatsArr.length > 0){
+        const seatsArr = parsedRes.seats.filter(
+          (seat) => seat.available === true
+        )
+        if (seatsArr.length > 0) {
           flight.availableSeats = seatsArr.length
           setFilteredFlights(...filteredFlights, [flight])
         }
       })
     }
   }, [])
-  
+
   const handleBookClick = (flight) => {
     setSelectedFlight(flight)
     navigate('/book-flight')
@@ -102,16 +105,16 @@ function Results() {
   }
 
   const renderNoFlights = () => {
-    return(
+    return (
       <Container>
         <Row>
           <Col xs={12}>
-          <h4>No Flights found</h4>
+            <h4>No Flights found</h4>
           </Col>
         </Row>
-        <Row className='mt-5'>
+        <Row className="mt-5">
           <Col xs={12}>
-            <Button onClick={()=> navigate('/')}>Back Home</Button>
+            <Button onClick={() => navigate('/')}>Back Home</Button>
           </Col>
         </Row>
       </Container>
@@ -120,7 +123,9 @@ function Results() {
 
   return (
     <Container className="mt-5">
-      <Row>{filteredFlights.length > 0 ? renderFlights() : renderNoFlights() }</Row>
+      <Row>
+        {filteredFlights.length > 0 ? renderFlights() : renderNoFlights()}
+      </Row>
     </Container>
   )
 }
