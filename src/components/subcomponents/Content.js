@@ -8,14 +8,14 @@ function Content() {
     <>
       <Carousel fade>
         <Carousel.Item>
-          <img src={passportImg} alt="Passport" className='d-block w-100' style={{maxHeight: '500px'}}/>
+          <img src={passportImg} alt="Passport" className='d-block w-100'/>
           <Carousel.Caption className='bg-gray-out'>
             <h2>The Vacation of your life</h2>
             <h4>Book it with Fly Away!</h4>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img src={peakImg} alt="Peak Bamboo"  className='d-block w-100' style={{maxHeight: '500px'}}/>
+          <img src={peakImg} alt="Peak Bamboo"  className='d-block w-100'/>
           <Carousel.Caption className='bg-gray-out' >
             <h4>Tropical Paradise</h4>
           </Carousel.Caption>

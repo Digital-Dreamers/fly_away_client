@@ -18,6 +18,7 @@ function Reservation() {
   const API_URL_DELETE = `https://fly-away-api.herokuapp.com/customers/reservations/cancellation/${data._id}/${passenger._id}`
   const API_URL_UPDATE_SEAT = `https://fly-away-api.herokuapp.com/customers/update-old-seat`
 
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(API_URL)

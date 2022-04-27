@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 // bootstrap comps
@@ -12,10 +12,25 @@ import { GlobalContext } from './helpers/GlobalContext'
 
 function Results() {
   const { flights, setSelectedFlight } = useContext(GlobalContext)
+  const [filteredFlights, setFilteredFlights] = useState([])
   let navigate = useNavigate()
 
+
+  useEffect(() => {
+    if(flights.length > 0){
+      flights.forEach(async (flight, index) => {
+        const response = await fetch(`https://fly-away-api.herokuapp.com/customers/search/flight/available-seats/${flight._id}`)
+        const parsedRes = await response.json()
+        const seatsArr = parsedRes.seats.filter(seat => seat.available === true)
+        if(seatsArr.length > 0){
+          flight.availableSeats = seatsArr.length
+          setFilteredFlights(...filteredFlights, [flight])
+        }
+      })
+    }
+  }, [])
+  
   const handleBookClick = (flight) => {
-    // console.log(flight)
     setSelectedFlight(flight)
     navigate('/book-flight')
   }
@@ -23,7 +38,7 @@ function Results() {
   const renderFlights = () => {
     return (
       <>
-        {flights.map((flight) => {
+        {filteredFlights.map((flight) => {
           return (
             <Col xs={12} className="border mb-3" key={flight._id}>
               <Row>
@@ -64,7 +79,7 @@ function Results() {
                   </Row>
                   <Row>
                     <Col xs={12}>
-                      <p>Available Seats: {flight.totalSeats}</p>
+                      <p>Available Seats: {flight.availableSeats}</p>
                     </Col>
                   </Row>
                 </Col>
@@ -86,9 +101,26 @@ function Results() {
     )
   }
 
+  const renderNoFlights = () => {
+    return(
+      <Container>
+        <Row>
+          <Col xs={12}>
+          <h4>No Flights found</h4>
+          </Col>
+        </Row>
+        <Row className='mt-5'>
+          <Col xs={12}>
+            <Button onClick={()=> navigate('/')}>Back Home</Button>
+          </Col>
+        </Row>
+      </Container>
+    )
+  }
+
   return (
     <Container className="mt-5">
-      <Row>{flights ? renderFlights() : null}</Row>
+      <Row>{filteredFlights.length > 0 ? renderFlights() : renderNoFlights() }</Row>
     </Container>
   )
 }
