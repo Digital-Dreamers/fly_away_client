@@ -18,7 +18,6 @@ function Reservation() {
   const API_URL_DELETE = `https://fly-away-api.herokuapp.com/customers/reservations/cancellation/${data._id}/${passenger._id}`
   const API_URL_UPDATE_SEAT = `https://fly-away-api.herokuapp.com/customers/update-old-seat`
 
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(API_URL)
@@ -84,22 +83,21 @@ function Reservation() {
                   <br />
                   {data._id}
                 </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="dark" onClick={handleDelete}>
+                    Cancel Reservation
+                  </Button>
+                </Modal.Footer>
               </>
             ) : (
               <Modal.Body>
-                <h5>Reservation Deleted</h5> <br />
+                <h5>Reservation Cancelled</h5> <br />
                 {data._id}
               </Modal.Body>
             )}
-
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="dark" onClick={handleDelete}>
-                Cancel Reservation
-              </Button>
-            </Modal.Footer>
           </Modal>
 
           <Col xs={12}>

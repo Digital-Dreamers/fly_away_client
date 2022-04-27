@@ -159,7 +159,7 @@ function BookFlight() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col sm={14} md={7} className="my-3">
+                  <Col sm={14} md={9} className="my-3">
                     <Form.Group controlId="address">
                       <Form.Label>Address</Form.Label>
                       <Form.Control
@@ -170,13 +170,28 @@ function BookFlight() {
                       />
                     </Form.Group>
                   </Col>
-                  <Col>
-                    <Col sm={14} md={3} className="my-3">
+
+                  <Col sm={14} md={3} className="my-3">
+                    <Form.Group controlId="city">
+                      <Form.Label>City</Form.Label>
+                      <Form.Control
+                        onChange={onChange}
+                        name="city"
+                        type="text"
+                        placeholder="City"
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  {' '}
+                  {/* <Col>
+                    <Col sm={10} md={2} className=" mx-2 my-3">
                       <Form.Label>State</Form.Label>
                       <Row>
                         <Form.Select
-                          onChange={onChange}
                           placeholder="State"
+                          onChange={onChange}
                           name="state"
                           type="text"
                           aria-label="Default select example"
@@ -235,20 +250,75 @@ function BookFlight() {
                         </Form.Select>
                       </Row>
                     </Col>
-                  </Col>
+                  </Col> */}
+                  {/*  */}
+                  <Form.Group
+                    className="my-3"
+                    as={Col}
+                    md={2}
 
-                  <Col sm={14} md={2} className="my-3">
-                    <Form.Group controlId="city">
-                      <Form.Label>City</Form.Label>
-                      <Form.Control
-                        onChange={onChange}
-                        name="city"
-                        type="text"
-                        placeholder="City"
-                      />
-                    </Form.Group>
-                  </Col>
-
+                    // controlId="formGridState"
+                  >
+                    <Form.Label>State</Form.Label>
+                    <Form.Select
+                      onChange={onChange}
+                      name="state"
+                      type="text"
+                      defaultValue="Choose..."
+                    >
+                      <option>Select State</option>
+                      <option value="AK">Alaska</option>
+                      <option value="AL">Alabama</option>
+                      <option value="AK">Alaska</option>
+                      <option value="AZ">Arizona</option>
+                      <option value="AR">Arkansas</option>
+                      <option value="CA">California</option>
+                      <option value="CT">Connecticut</option>
+                      <option value="CO">Colorado</option>
+                      <option value="DE">Delaware</option>
+                      <option value="FL">Florida</option>
+                      <option value="GA">Georgia</option>
+                      <option value="HI">Hawaii</option>
+                      <option value="IA">Iowa</option>
+                      <option value="ID">Idaho</option>
+                      <option value="IL">Illinois</option>
+                      <option value="IN">Indiana</option>
+                      <option value="KY">Kentucky</option>
+                      <option value="LA">Louisiana</option>
+                      <option value="MA">Massachussets</option>
+                      <option value="MD">Maryland</option>
+                      <option value="ME">Maine</option>
+                      <option value="MI">Michigan</option>
+                      <option value="MN">Minnesota</option>
+                      <option value="MO">Missouri</option>
+                      <option value="MS">Mississippi</option>
+                      <option value="MT">Montana</option>
+                      <option value="NC">North Carolina</option>
+                      <option value="ND">North Dakota</option>
+                      <option value="NE">Nebraska</option>
+                      <option value="NH">New Hampshire</option>
+                      <option value="NJ">New Jersey</option>
+                      <option value="NM">New Mexico</option>
+                      <option value="NV">Nevada</option>
+                      <option value="NY">New York</option>
+                      <option value="OH">Ohio</option>
+                      <option value="OK">Oklahoma</option>
+                      <option value="OR">Oregon</option>
+                      <option value="PA">Pennsylvania</option>
+                      <option value="RI">Rhode Island</option>
+                      <option value="SC">South Carolina</option>
+                      <option value="SD">South Dakota</option>
+                      <option value="TN">Tennessee</option>
+                      <option value="TX">Texas</option>
+                      <option value="UT">Utah</option>
+                      <option value="VA">Virginia</option>
+                      <option value="VT">Vermont</option>
+                      <option value="WA">Washington</option>
+                      <option value="WI">Wisconsin</option>
+                      <option value="WV">West Virginia</option>
+                      <option value="WY">Wyoming</option>
+                    </Form.Select>
+                  </Form.Group>
                   <Col sm={14} md={2} className="my-3">
                     <Form.Group controlId="zip">
                       <Form.Label>ZipCode</Form.Label>
