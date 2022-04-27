@@ -33,7 +33,7 @@ function SearchFlight() {
       return
     }
     setFlightNotFound(true)
-    setTimeout(() => setFlightNotFound(false), 2500)
+    setTimeout(() => setFlightNotFound(false), 3000)
   }
 
   return (
