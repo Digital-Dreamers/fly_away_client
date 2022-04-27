@@ -79,9 +79,6 @@ function BookFlight() {
       const resData = await response.json()
       const id = resData.reservation._id
 
-      console.log(resData.reservation._id)
-      console.log(id)
-
       navigate(`/reservation/${id}`)
 
       return resData
@@ -311,7 +308,7 @@ function BookFlight() {
             <Row>
               <Col className="mt-5" xs={12} md={6}>
                 {' '}
-                Depature Time -{' '}
+                Departure Time -{' '}
                 {!flights ? null : flights.selectedFlight.departureTime}
               </Col>
               <Col className="mt-5" xs={12} md={6}>
