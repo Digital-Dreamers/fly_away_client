@@ -261,9 +261,9 @@ function BookFlight() {
             </Row>
           </section>
 
-          <Row className="border">
+          <Row className="border mx-1">
             <Col xs={12}>
-              <h3 className="mt-2">Flight Details</h3>
+              <h3 className="mt-2 ">Flight Details</h3>
             </Col>
           </Row>
           <Container className="border mt-5">

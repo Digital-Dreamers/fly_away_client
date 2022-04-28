@@ -61,8 +61,8 @@ function Reservation() {
   }
   const handleClose = () => setShow(false)
 
-  return (
-    <>
+  const displayReservation = () => {
+    return (
       <div>
         <h3 className="mt-5">Reservation Number</h3>
         <h6 className="mb-5">{!data ? null : data._id}</h6>
@@ -205,8 +205,21 @@ function Reservation() {
           </button>{' '}
         </div>
       </div>
-    </>
-  )
+    )
+  }
+
+  const displayReservationMsg = () => {
+    return (
+      <>
+        <h3 className="mt-5">Reservation not found</h3>
+        <Button className="mt-5 bg-dark" onClick={(e) => navigate('/')}>
+          Back
+        </Button>
+      </>
+    )
+  }
+
+  return <>{data ? displayReservation() : displayReservationMsg()} </>
 }
 
 export default Reservation
