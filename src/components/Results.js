@@ -12,26 +12,34 @@ import { GlobalContext } from './helpers/GlobalContext'
 
 function Results() {
   const { flights, setSelectedFlight } = useContext(GlobalContext)
-  const [filteredFlights, setFilteredFlights] = useState([])
+  const [filteredFlights, setFilteredFlights] = useState('')
   let navigate = useNavigate()
 
   useEffect(() => {
-    if (flights.length > 0) {
-      flights.forEach(async (flight, index) => {
-        const response = await fetch(
-          `https://fly-away-api.herokuapp.com/customers/search/flight/available-seats/${flight._id}`
+    const filterBySeat = async () => {
+      if (flights.length > 0) {
+        let newFlightArr = await Promise.all(
+          flights.map(async (flight) => {
+            const response = await fetch(
+              `https://fly-away-api.herokuapp.com/customers/search/flight/available-seats/${flight._id}`
+            )
+            const parsedRes = await response.json()
+            const seatsArr = parsedRes.seats.filter(
+              (seat) => seat.available === true
+            )
+            if (seatsArr.length > 0) {
+              flight.availableSeats = seatsArr.length
+              return flight
+            }
+            return null
+          })
         )
-        const parsedRes = await response.json()
-        const seatsArr = parsedRes.seats.filter(
-          (seat) => seat.available === true
-        )
-        if (seatsArr.length > 0) {
-          flight.availableSeats = seatsArr.length
-          setFilteredFlights(...filteredFlights, [flight])
-        }
-      })
+        let filteredFlightsArr = newFlightArr.filter( flight => flight != null)
+        setFilteredFlights(filteredFlightsArr)
+      }
     }
-  }, [])
+    filterBySeat()
+  }, [flights])
 
   const handleBookClick = (flight) => {
     setSelectedFlight(flight)
@@ -39,6 +47,7 @@ function Results() {
   }
 
   const renderFlights = () => {
+    console.log('filtered flights',filteredFlights)
     return (
       <>
         {filteredFlights.map((flight) => {
@@ -77,7 +86,7 @@ function Results() {
                 <Col xs={6} md={4}>
                   <Row>
                     <Col xs={12}>
-                      <p>Seat Price: {flight.seatPrice}</p>
+                      <p>Seat Price: $ {flight.seatPrice}</p>
                     </Col>
                   </Row>
                   <Row>
@@ -124,7 +133,7 @@ function Results() {
   return (
     <Container className="mt-5">
       <Row>
-        {filteredFlights.length > 0 ? renderFlights() : renderNoFlights()}
+        {filteredFlights ? renderFlights() : renderNoFlights()}
       </Row>
     </Container>
   )
