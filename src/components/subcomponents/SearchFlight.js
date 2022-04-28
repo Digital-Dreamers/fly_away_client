@@ -24,7 +24,7 @@ function SearchFlight() {
 
   const getData = async () => {
     const response = await fetch(
-      `http://localhost:3000/customers/search?departure=${departure.toUpperCase()}&destination=${destination.toUpperCase()}&departureDate=${departureDate}&numberOfSeats=${numberOfSeats}`
+      `https://fly-away-api.herokuapp.com/customers/search?departure=${departure.toUpperCase()}&destination=${destination.toUpperCase()}&departureDate=${departureDate}&numberOfSeats=${numberOfSeats}`
     )
     const fetchedFlights = await response.json()
     if (fetchedFlights.flights) {

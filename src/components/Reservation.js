@@ -14,9 +14,9 @@ function Reservation() {
   const reservationId = useParams()
   const navigate = useNavigate()
 
-  const API_URL = `http://localhost:3000/customers/reservations/${reservationId.id}`
-  const API_URL_DELETE = `http://localhost:3000/customers/reservations/cancellation/${data._id}/${passenger._id}`
-  const API_URL_UPDATE_SEAT = `http://localhost:3000/customers/update-old-seat`
+  const API_URL = `https://fly-away-api.herokuapp.com/customers/reservations/${reservationId.id}`
+  const API_URL_DELETE = `https://fly-away-api.herokuapp.com/customers/reservations/cancellation/${data._id}/${passenger._id}`
+  const API_URL_UPDATE_SEAT = `https://fly-away-api.herokuapp.com/customers/update-old-seat`
 
   useEffect(() => {
     const fetchData = async () => {
