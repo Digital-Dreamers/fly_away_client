@@ -21,6 +21,12 @@ function SearchFlight() {
   const [departureDate, setDepartureDate] = useState('')
   const [numberOfSeats, setNumberOfSeats] = useState('')
   const [flightNotFound, setFlightNotFound] = useState(false)
+  let today = new Date()
+  const year = today.getFullYear()
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2, '0')
+  today = `${year}-${month}-${day}`
+
 
   const getData = async () => {
     const response = await fetch(
@@ -76,6 +82,7 @@ function SearchFlight() {
             <FloatingLabel controlId="departure-date" label="Departing">
               <Form.Control
                 type="date"
+                min={today}
                 onChange={(e) => {
                   setDepartureDate(e.target.value)
                 }}
