@@ -46,3 +46,11 @@
 .fill-page{
   min-height: calc(100vh - 216px);
 }
+
+.bg-main{
+  background-color: rgb(139,215,237);
+}
+
+.bg-other{
+  background-color: rgb(14,26,50);
+}
