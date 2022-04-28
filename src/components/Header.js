@@ -13,7 +13,7 @@ function Header() {
 
     return (
 
-        <Navbar bg="primary" variant="dark" expand='sm'>
+        <Navbar className="bg-other" variant="dark" expand='sm'>
             <Container>
                 <Navbar.Brand as={Link} to="/"><MdOutlineAirplaneTicket style={{fontSize: '2em'}} className="me-1"/>Fly Away</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
