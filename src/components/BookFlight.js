@@ -31,9 +31,9 @@ function BookFlight() {
     seatNumberId,
   } = formData
 
-  const API_URL_GET_SEATS = `https://fly-away-api.herokuapp.com/customers/search/flight/available-seats/${flights.selectedFlight._id}`
-  const API_URL_BOOK_RESERVATION = `https://fly-away-api.herokuapp.com/customers/book`
-  const API_URL_UPDATE_SEAT = `https://fly-away-api.herokuapp.com/customers/update-old-seat`
+  const API_URL_GET_SEATS = `http://localhost:3000/customers/search/flight/available-seats/${flights.selectedFlight._id}`
+  const API_URL_BOOK_RESERVATION = `http://localhost:3000/customers/book`
+  const API_URL_UPDATE_SEAT = `http://localhost:3000/customers/update-old-seat`
 
   const availableSeats = () => {
     if (allAvailableSeats) {
@@ -184,7 +184,7 @@ function BookFlight() {
                   </Col>
                 </Row>
                 <Row>
-                  <Form.Group className="my-3" as={Col} md={3}>
+                  <Form.Group className="my-3 pb-3" as={Col} md={3}>
                     <Form.Label>State</Form.Label>
                     <Form.Select
                       onChange={onChange}
@@ -245,7 +245,7 @@ function BookFlight() {
                       <option value="WY">Wyoming</option>
                     </Form.Select>
                   </Form.Group>
-                  <Col sm={14} md={2} className="my-3">
+                  <Col sm={14} md={2} className="my-3 pb-3">
                     <Form.Group controlId="zip">
                       <Form.Label>ZipCode</Form.Label>
                       <Form.Control
