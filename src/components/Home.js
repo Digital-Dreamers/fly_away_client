@@ -10,7 +10,7 @@ import Content from './subcomponents/Content'
 function Home() {
   return (
     <Container className="mt-5">
-      <Row className="border">
+      <Row className="border mx-1">
         <Col xs={12}>
           <h3 className="mt-2">Search Flight</h3>
           <SearchFlight />

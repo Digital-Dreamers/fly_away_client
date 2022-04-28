@@ -184,7 +184,7 @@ function BookFlight() {
                   </Col>
                 </Row>
                 <Row>
-                  <Form.Group className="my-3" as={Col} md={3}>
+                  <Form.Group className="my-3 pb-3" as={Col} md={3}>
                     <Form.Label>State</Form.Label>
                     <Form.Select
                       onChange={onChange}
@@ -245,7 +245,7 @@ function BookFlight() {
                       <option value="WY">Wyoming</option>
                     </Form.Select>
                   </Form.Group>
-                  <Col sm={14} md={2} className="my-3">
+                  <Col sm={14} md={2} className="my-3 pb-3">
                     <Form.Group controlId="zip">
                       <Form.Label>ZipCode</Form.Label>
                       <Form.Control
@@ -261,9 +261,9 @@ function BookFlight() {
             </Row>
           </section>
 
-          <Row className="border">
+          <Row className="border mx-1">
             <Col xs={12}>
-              <h3 className="mt-2">Flight Details</h3>
+              <h3 className="mt-2 ">Flight Details</h3>
             </Col>
           </Row>
           <Container className="border mt-5">

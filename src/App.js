@@ -19,22 +19,25 @@ function App() {
   const [selectedFlight, setSelectedFlight] = useState('')
 
   return (
-    <div className="App">
+    <div className="App ">
       <Router>
         <Header />
-        <div className='fill-page'>
-          <GlobalContext.Provider value={{ flights, setFlights, selectedFlight, setSelectedFlight }}>
+        <div className="fill-page">
+          <GlobalContext.Provider
+            value={{ flights, setFlights, selectedFlight, setSelectedFlight }}
+          >
             <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/results' element={<Results />} />
-              <Route path='/book-flight' element={<BookFlight />} />
-              <Route path='/reservation/:id' element={<Reservation />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/results" element={<Results />} />
+              <Route path="/book-flight" element={<BookFlight />} />
+              <Route path="/reservation/:id" element={<Reservation />} />
+              {/* <Route path="/reservation/*" element={<Reservation />} /> */}
             </Routes>
           </GlobalContext.Provider>
         </div>
         <Footer />
       </Router>
-    </div >
+    </div>
   )
 }
 
