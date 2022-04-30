@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import Spinner from 'react-bootstrap/Spinner'
 
 // Global Context
 import { GlobalContext } from './helpers/GlobalContext'
@@ -13,6 +14,7 @@ import { GlobalContext } from './helpers/GlobalContext'
 function Results() {
   const { flights, setSelectedFlight } = useContext(GlobalContext)
   const [filteredFlights, setFilteredFlights] = useState('')
+  const [loading, setLoading] = useState(true)
   let navigate = useNavigate()
 
   useEffect(() => {
@@ -36,6 +38,7 @@ function Results() {
         )
         let filteredFlightsArr = newFlightArr.filter( flight => flight != null)
         setFilteredFlights(filteredFlightsArr)
+        setLoading(false)
       }
     }
     filterBySeat()
@@ -132,8 +135,8 @@ function Results() {
 
   return (
     <Container className="mt-5">
-      <Row>
-        {filteredFlights ? renderFlights() : renderNoFlights()}
+      <Row className='d-flex justify-content-center align-items-center'>
+        {loading ?   <Spinner animation="border" variant="info" /> : filteredFlights ? renderFlights() : renderNoFlights()}
       </Row>
     </Container>
   )

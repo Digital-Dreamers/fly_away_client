@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
+import Spinner from 'react-bootstrap/Spinner'
 
 //import context
 import { GlobalContext } from '../helpers/GlobalContext'
@@ -21,6 +22,7 @@ function SearchFlight() {
   const [departureDate, setDepartureDate] = useState('')
   const [numberOfSeats, setNumberOfSeats] = useState('')
   const [flightNotFound, setFlightNotFound] = useState(false)
+  const [loading, setLoading] = useState(false)
   let today = new Date()
   const year = today.getFullYear()
   const month = String(today.getMonth() + 1).padStart(2, '0')
@@ -33,6 +35,7 @@ function SearchFlight() {
       `https://fly-away-api.herokuapp.com/customers/search?departure=${departure.toUpperCase()}&destination=${destination.toUpperCase()}&departureDate=${departureDate}&numberOfSeats=${numberOfSeats}`
     )
     const fetchedFlights = await response.json()
+    setLoading(false)
     if (fetchedFlights.flights) {
       setFlights(fetchedFlights.flights)
       navigate('/results')
@@ -47,11 +50,12 @@ function SearchFlight() {
       className="mt-3"
       onSubmit={(e) => {
         e.preventDefault()
+        setLoading(true)
         getData()
       }}
     >
       <Form.Group controlId="search-flight">
-        {flightNotFound ? (
+        {loading ?  <Spinner animation="border" variant="info" /> : flightNotFound ? (
           <Alert variant="danger">No Flights Found!</Alert>
         ) : null}
         <Row>
