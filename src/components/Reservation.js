@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Col, Row, Modal, Button, Container } from 'react-bootstrap'
 import { upperCase } from '../utilities/utility_functions'
+import PassengerInformation from './PassengerInformation'
 
 function Reservation() {
   const [data, setData] = useState('')
   const [seat, setSeat] = useState('')
-  const [seatId, setSeatId] = useState('')
+  const [seatId, setSeatId] = useState([])
   const [passenger, setPassenger] = useState('')
   const [seatAvailable] = useState(true)
   const [show, setShow] = useState(false)
@@ -14,23 +15,23 @@ function Reservation() {
   const reservationId = useParams()
   const navigate = useNavigate()
 
-  const API_URL = `http://localhost:3000/customers/reservations/${reservationId.id}`
+  const API_URL_SINGLE_RESERVATION = `http://localhost:3000/customers/reservations/${reservationId.id}`
   const API_URL_DELETE = `http://localhost:3000/customers/reservations/cancellation/${data._id}/${passenger._id}`
   const API_URL_UPDATE_SEAT = `http://localhost:3000/customers/update-old-seat`
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(API_URL)
+      const response = await fetch(API_URL_SINGLE_RESERVATION)
       const resData = await response.json()
-
       setSeatId(resData.seatNumberId)
-      setSeat(resData.seatNumberId)
+      setSeat(resData.seatNumberId[0])
       setData(resData)
       setPassenger(resData.passengerId[0])
-      console.log(resData.passengerId[0])
+      console.log(seatId)
+      console.log(resData.seatNumberId)
     }
     fetchData()
-  }, [API_URL, API_URL_DELETE])
+  }, [API_URL_SINGLE_RESERVATION, API_URL_DELETE])
 
   const handleDelete = (e) => {
     const deleteData = async () => {
@@ -38,10 +39,16 @@ function Reservation() {
       return response
     }
 
+    const updateAllSeats = seatId
+    console.log(updateAllSeats)
+
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ oldSeatId: seatId, available: seatAvailable }),
+      body: JSON.stringify({
+        oldSeatId: updateAllSeats,
+        available: seatAvailable,
+      }),
     }
     const updateSeat = async () => {
       const response = await fetch(API_URL_UPDATE_SEAT, requestOptions)
@@ -54,7 +61,7 @@ function Reservation() {
     setTimeout(() => {
       handleClose()
       navigate('/')
-    }, 3000)
+    }, 2500)
   }
 
   const handleShow = () => {
@@ -160,41 +167,7 @@ function Reservation() {
               </Col>
             </div>
           </main>
-          <h5 className="mt-5">Passenger Information</h5>
-          <section className="container mb-5">
-            <div className="row g-3 mt-3">
-              <Col xs={12}>
-                <Row>
-                  <Col xs={12} md={6}>
-                    First Name - {!passenger ? null : passenger.firstName}{' '}
-                  </Col>
-                  <Col xs={12} md={6}>
-                    Last Name - {!passenger ? null : passenger.lastName}{' '}
-                  </Col>
-                </Row>
-              </Col>
-              <Col xs={12}>
-                <Row>
-                  <Col xs={12} md={6}>
-                    Age - {!passenger ? null : passenger.age}
-                  </Col>
-                  <Col xs={12} md={6}>
-                    Address - {!passenger ? null : passenger.address}{' '}
-                  </Col>
-                </Row>
-              </Col>
-              <Col xs={12}>
-                <Row>
-                  <Col xs={12} md={6}>
-                    City - {!passenger ? null : passenger.city}
-                  </Col>
-                  <Col xs={12} md={6}>
-                    State - {!passenger ? null : passenger.state}{' '}
-                  </Col>
-                </Row>
-              </Col>
-            </div>
-          </section>
+          <PassengerInformation passenger={passenger} />
         </Container>
         <div className="container mt-5">
           {' '}

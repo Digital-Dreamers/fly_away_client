@@ -170,12 +170,13 @@ function PassengerForm({ onChange, onSubmit }) {
                 />
               </Form.Group>
             </Col>
-            <Col className="my-3 pb-3" sm={14} md={2}>
+            <Col className="my-3 pb-3" sm={14} md={3}>
               <Form.Label>Select Seat Number</Form.Label>
 
               <Row xs={6} sm={6} md={4}>
                 <Form.Select
                   onChange={onChange}
+                  className=""
                   name="seatNumberId"
                   aria-label="Default select example"
                 >

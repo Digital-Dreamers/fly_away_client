@@ -9,6 +9,7 @@ function BookFlight() {
   const flights = useContext(GlobalContext)
   const [allAvailableSeats, setAllAvailableSeats] = useState('')
   const [seatAvailable] = useState(false)
+  const [numberOfPassengers] = useState(2)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     firstName: '',
@@ -21,6 +22,7 @@ function BookFlight() {
     flightNumberId: flights.selectedFlight._id,
     seatNumberId: '',
   })
+
   const [formData2, setFormData2] = useState({
     firstName: '',
     lastName: '',
@@ -32,16 +34,6 @@ function BookFlight() {
     flightNumberId: flights.selectedFlight._id,
     seatNumberId: '',
   })
-  const {
-    firstName,
-    lastName,
-    age,
-    address,
-    city,
-    state,
-    reservationNumber,
-    seatNumberId,
-  } = formData2
 
   const API_URL_GET_SEATS = `http://localhost:3000/customers/search/flight/available-seats/${flights.selectedFlight._id}`
   const API_URL_BOOK_RESERVATION = `http://localhost:3000/customers/book`
@@ -52,56 +44,63 @@ function BookFlight() {
       ...prevState,
       [e.target.name]: e.target.value,
     }))
-    console.log(formData)
   }
+
   const onChangeTwo = (e) => {
     setFormData2((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }))
-    console.log(formData2)
   }
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
-    console.log(formData2)
-    const userData = {
-      firstName,
-      lastName,
-      address,
-      city,
-      state,
-      age,
-      flightNumberId: flights.selectedFlight._id,
-      seatNumberId,
-      reservationNumber,
+    // const allData = [formData, formData2]
+    const allData = [formData]
+
+    if (numberOfPassengers === 2) {
+      allData.push(formData2)
     }
+    console.log(allData.length)
+
     const requestBooking = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(allData),
+      // body: JSON.stringify(formData),
     }
     const bookFlight = async () => {
       const response = await fetch(API_URL_BOOK_RESERVATION, requestBooking)
       const resData = await response.json()
       const id = resData.reservation._id
-
+      console.log(resData)
       navigate(`/reservation/${id}`)
 
       return resData
     }
 
+    const { seatNumberId: seatNumberIdOne } = formData
+    const { seatNumberId: seatNumberIdTwo } = formData2
+    // const updateAllSeats = [seatNumberIdOne, seatNumberIdTwo]
+    const updateAllSeats = [seatNumberIdOne]
+    if (numberOfPassengers === 2) {
+      updateAllSeats.push(seatNumberIdTwo)
+    }
+
+    console.log(updateAllSeats.length)
+    console.log(updateAllSeats)
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        oldSeatId: seatNumberId,
+        oldSeatId: updateAllSeats,
         available: seatAvailable,
       }),
     }
+
     const updateSeat = async () => {
       const response = await fetch(API_URL_UPDATE_SEAT, requestOptions)
+      console.log(response)
       return response
     }
 
@@ -171,11 +170,30 @@ function BookFlight() {
               </Col>
             </Row>
           </Col>
-          <h3 className="mt-5">Passenger Information</h3>
           {/*  */}
           <Form onSubmit={onSubmit}>
-            <PassengerForm onSubmit={onSubmit} onChange={onChange} />
-            <PassengerForm onSubmit={onSubmit} onChange={onChangeTwo} />
+            {numberOfPassengers === 1 ? (
+              <>
+                <h3 className="mt-5 mb-5">Passenger Information</h3>
+                <PassengerForm onSubmit={onSubmit} onChange={onChange} />
+              </>
+            ) : (
+              <>
+                {' '}
+                <h3 className="mt-5 mb-5">Passenger One Information</h3>
+                <PassengerForm
+                  key={1}
+                  onSubmit={onSubmit}
+                  onChange={onChange}
+                />
+                <h3 className="mt-5 mb-5">Passenger Two Information</h3>
+                <PassengerForm
+                  key={2}
+                  onSubmit={onSubmit}
+                  onChange={onChangeTwo}
+                />
+              </>
+            )}
 
             <Button className="m-5" type="submit">
               Submit
