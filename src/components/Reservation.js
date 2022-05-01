@@ -6,9 +6,13 @@ import PassengerInformation from './PassengerInformation'
 
 function Reservation() {
   const [data, setData] = useState('')
-  const [seat, setSeat] = useState('')
+  const [seatOne, setSeatOne] = useState('')
+  const [seatTwo, setSeatTwo] = useState('')
   const [seatId, setSeatId] = useState([])
-  const [passenger, setPassenger] = useState('')
+  const [passengerOne, setPassengerOne] = useState('')
+  const [passengerTwo, setPassengerTwo] = useState('')
+  const [passengerOneId, setPassengerOneId] = useState('')
+  const [passengerTwoId, setPassengerTwoId] = useState('')
   const [seatAvailable] = useState(true)
   const [show, setShow] = useState(false)
   const [cancel, setCancel] = useState(false)
@@ -16,19 +20,24 @@ function Reservation() {
   const navigate = useNavigate()
 
   const API_URL_SINGLE_RESERVATION = `http://localhost:3000/customers/reservations/${reservationId.id}`
-  const API_URL_DELETE = `http://localhost:3000/customers/reservations/cancellation/${data._id}/${passenger._id}`
+  const API_URL_DELETE = `http://localhost:3000/customers/reservations/cancellation/${data._id}/${passengerOneId}-${passengerTwoId}`
   const API_URL_UPDATE_SEAT = `http://localhost:3000/customers/update-old-seat`
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(API_URL_SINGLE_RESERVATION)
       const resData = await response.json()
+
       setSeatId(resData.seatNumberId)
-      setSeat(resData.seatNumberId[0])
+      setSeatOne(resData.seatNumberId[0])
       setData(resData)
-      setPassenger(resData.passengerId[0])
-      console.log(seatId)
-      console.log(resData.seatNumberId)
+      setPassengerOne(resData.passengerId[0])
+      setPassengerTwo(resData.passengerId[1])
+      setPassengerOneId(resData.passengerId[0]._id)
+      if (resData.passengerId.length === 2) {
+        setPassengerTwoId(resData.passengerId[1]._id)
+        setSeatTwo(resData.seatNumberId[1])
+      }
     }
     fetchData()
   }, [API_URL_SINGLE_RESERVATION, API_URL_DELETE])
@@ -40,7 +49,6 @@ function Reservation() {
     }
 
     const updateAllSeats = seatId
-    console.log(updateAllSeats)
 
     const requestOptions = {
       method: 'PUT',
@@ -87,7 +95,7 @@ function Reservation() {
                     </Modal.Header>
                     <Modal.Body>
                       <h5>
-                        {passenger.firstName}, you are about to cancel your
+                        {passengerOne.firstName}, you are about to cancel your
                         reservation:
                       </h5>{' '}
                       <br />
@@ -158,16 +166,42 @@ function Reservation() {
               <Col xs={12}>
                 <Row>
                   <Col xs={12} md={6}>
-                    Seat Number - {!seat ? null : seat.seatNumber}
+                    Seat Number - {!seatOne ? null : seatOne.seatNumber}
                   </Col>
                   <Col xs={12} md={6}>
-                    Seat Class - {!seat ? null : upperCase(seat.seatClass)}
+                    Seat Class -{' '}
+                    {!seatOne ? null : upperCase(seatOne.seatClass)}
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs={12}>
+                <Row>
+                  <Col xs={12} md={6}>
+                    {!seatTwo ? null : `Seat Number - ${seatTwo.seatNumber}`}
+                  </Col>
+                  <Col xs={12} md={6}>
+                    {!seatTwo
+                      ? null
+                      : `Seat Class - ${upperCase(seatTwo.seatClass)}`}
                   </Col>
                 </Row>
               </Col>
             </div>
           </main>
-          <PassengerInformation passenger={passenger} />
+          {!passengerTwo ? (
+            <>
+              {' '}
+              <h5 className="mt-5">Passenger Information</h5>
+              <PassengerInformation passenger={passengerOne} />
+            </>
+          ) : (
+            <>
+              <h5 className="mt-5">Passenger One Information</h5>
+              <PassengerInformation passenger={passengerOne} />
+              <h5 className="mt-5">Passenger Two Information</h5>
+              <PassengerInformation passenger={passengerTwo} />
+            </>
+          )}
         </Container>
         <div className="container mt-5">
           {' '}

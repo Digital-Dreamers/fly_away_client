@@ -7,13 +7,13 @@ import Col from 'react-bootstrap/Col'
 import SearchFlight from './subcomponents/SearchFlight'
 import Content from './subcomponents/Content'
 
-function Home() {
+function Home({ handleNumberOfSeats }) {
   return (
     <Container className="mt-5">
       <Row className="border mx-1">
         <Col xs={12}>
           <h3 className="mt-2">Search Flight</h3>
-          <SearchFlight />
+          <SearchFlight handleNumberOfSeats={handleNumberOfSeats} />
         </Col>
       </Row>
       <Row className="mt-5">

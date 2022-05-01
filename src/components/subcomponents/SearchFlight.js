@@ -10,16 +10,16 @@ import Alert from 'react-bootstrap/Alert'
 //import context
 import { GlobalContext } from '../helpers/GlobalContext'
 
-function SearchFlight() {
+function SearchFlight({ handleNumberOfSeats }) {
   let navigate = useNavigate()
   // import global states
-  const { setFlights } = useContext(GlobalContext)
+  const { setFlights, numberOfSeats } = useContext(GlobalContext)
 
   // departure, destination, departureDate, numberOfSeats
   const [departure, setDeparture] = useState('')
   const [destination, setDestination] = useState('')
   const [departureDate, setDepartureDate] = useState('')
-  const [numberOfSeats, setNumberOfSeats] = useState('')
+  // const [numberOfSeats, setNumberOfSeats] = useState('')
   const [flightNotFound, setFlightNotFound] = useState(false)
 
   const getData = async () => {
@@ -33,7 +33,7 @@ function SearchFlight() {
       return
     }
     setFlightNotFound(true)
-    setTimeout(() => setFlightNotFound(false), 2500)
+    setTimeout(() => setFlightNotFound(false), 3000)
   }
 
   return (
@@ -88,11 +88,11 @@ function SearchFlight() {
               <Form.Control
                 type="number"
                 min="1"
-                max="10"
+                max="2"
                 placeholder="1"
                 inputMode="numeric"
                 onChange={(e) => {
-                  setNumberOfSeats(e.target.value)
+                  handleNumberOfSeats(e, e.target.value)
                 }}
                 required
               />

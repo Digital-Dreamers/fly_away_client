@@ -4,7 +4,6 @@ import { Col, Row } from 'react-bootstrap'
 function PassengerInformation({ passenger }) {
   return (
     <>
-      <h5 className="mt-5">Passenger Information</h5>
       <section className="container mb-5">
         <div className="row g-3 mt-3">
           <Col xs={12}>

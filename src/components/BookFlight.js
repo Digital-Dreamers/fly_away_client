@@ -9,8 +9,10 @@ function BookFlight() {
   const flights = useContext(GlobalContext)
   const [allAvailableSeats, setAllAvailableSeats] = useState('')
   const [seatAvailable] = useState(false)
-  const [numberOfPassengers] = useState(2)
+  const [numberOfPassengers, setNumberOfPassengers] = useState('')
   const navigate = useNavigate()
+  const { numberOfSeats } = useContext(GlobalContext)
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -55,19 +57,16 @@ function BookFlight() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    // const allData = [formData, formData2]
-    const allData = [formData]
 
-    if (numberOfPassengers === 2) {
+    const allData = [formData]
+    if (Number(numberOfPassengers) === 2) {
       allData.push(formData2)
     }
-    console.log(allData.length)
 
     const requestBooking = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(allData),
-      // body: JSON.stringify(formData),
     }
     const bookFlight = async () => {
       const response = await fetch(API_URL_BOOK_RESERVATION, requestBooking)
@@ -81,14 +80,12 @@ function BookFlight() {
 
     const { seatNumberId: seatNumberIdOne } = formData
     const { seatNumberId: seatNumberIdTwo } = formData2
-    // const updateAllSeats = [seatNumberIdOne, seatNumberIdTwo]
     const updateAllSeats = [seatNumberIdOne]
-    if (numberOfPassengers === 2) {
+
+    if (Number(numberOfPassengers) === 2) {
       updateAllSeats.push(seatNumberIdTwo)
     }
 
-    console.log(updateAllSeats.length)
-    console.log(updateAllSeats)
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -100,7 +97,7 @@ function BookFlight() {
 
     const updateSeat = async () => {
       const response = await fetch(API_URL_UPDATE_SEAT, requestOptions)
-      console.log(response)
+
       return response
     }
 
@@ -113,6 +110,7 @@ function BookFlight() {
       const response = await fetch(API_URL_GET_SEATS)
       const resData = await response.json()
       setAllAvailableSeats(resData.seats)
+      setNumberOfPassengers(numberOfSeats)
     }
     fetchData()
   }, [API_URL_GET_SEATS])
@@ -172,7 +170,7 @@ function BookFlight() {
           </Col>
           {/*  */}
           <Form onSubmit={onSubmit}>
-            {numberOfPassengers === 1 ? (
+            {Number(numberOfPassengers) === 1 ? (
               <>
                 <h3 className="mt-5 mb-5">Passenger Information</h3>
                 <PassengerForm onSubmit={onSubmit} onChange={onChange} />
