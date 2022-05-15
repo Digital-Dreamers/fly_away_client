@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Col, Row, Modal, Button, Container } from 'react-bootstrap'
-import { upperCase } from '../utilities/utility_functions'
+import { upperCase, newDateFormat } from '../utilities/utility_functions'
 import PassengerInformation from './PassengerInformation'
 
 function Reservation() {
@@ -22,7 +22,7 @@ function Reservation() {
   const API_URL_SINGLE_RESERVATION = `http://localhost:3000/customers/reservations/${reservationId.id}`
   const API_URL_DELETE = `http://localhost:3000/customers/reservations/cancellation/${data._id}/${passengerOneId}-${passengerTwoId}`
   const API_URL_UPDATE_SEAT = `http://localhost:3000/customers/update-old-seat`
-
+  console.log(data)
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(API_URL_SINGLE_RESERVATION)
@@ -64,8 +64,11 @@ function Reservation() {
     }
 
     setCancel(true)
+
     updateSeat()
+
     deleteData()
+
     setTimeout(() => {
       handleClose()
       navigate('/')
@@ -140,11 +143,17 @@ function Reservation() {
                     Departure Date -{' '}
                     {!data
                       ? null
-                      : data.flightNumberId.departureDate.slice(0, 7)}
+                      : newDateFormat(
+                          data.flightNumberId.departureDate.slice(0, 10)
+                        )}
                   </Col>
                   <Col xs={12} md={6}>
                     Arrival Date -{' '}
-                    {!data ? null : data.flightNumberId.arrivalDate.slice(0, 7)}
+                    {!data
+                      ? null
+                      : newDateFormat(
+                          data.flightNumberId.arrivalDate.slice(0, 10)
+                        )}
                   </Col>
                 </Row>
               </Col>

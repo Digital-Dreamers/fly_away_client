@@ -15,12 +15,9 @@ function SearchFlight({ handleNumberOfSeats }) {
   let navigate = useNavigate()
   // import global states
   const { setFlights, numberOfSeats } = useContext(GlobalContext)
-
-  // departure, destination, departureDate, numberOfSeats
   const [departure, setDeparture] = useState('')
   const [destination, setDestination] = useState('')
   const [departureDate, setDepartureDate] = useState('')
-  // const [numberOfSeats, setNumberOfSeats] = useState('')
   const [flightNotFound, setFlightNotFound] = useState(false)
   const [loading, setLoading] = useState(false)
   let today = new Date()
@@ -28,7 +25,6 @@ function SearchFlight({ handleNumberOfSeats }) {
   const month = String(today.getMonth() + 1).padStart(2, '0')
   const day = String(today.getDate()).padStart(2, '0')
   today = `${year}-${month}-${day}`
-
 
   const getData = async () => {
     const response = await fetch(
@@ -55,7 +51,9 @@ function SearchFlight({ handleNumberOfSeats }) {
       }}
     >
       <Form.Group controlId="search-flight">
-        {loading ?  <Spinner animation="border" variant="info" /> : flightNotFound ? (
+        {loading ? (
+          <Spinner animation="border" variant="info" />
+        ) : flightNotFound ? (
           <Alert variant="danger">No Flights Found!</Alert>
         ) : null}
         <Row>

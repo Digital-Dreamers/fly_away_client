@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import { GlobalContext } from './helpers/GlobalContext'
 import PassengerForm from './subcomponents/PassengerForm'
+import { upperCase, newDateFormat } from '../utilities/utility_functions'
 
 function BookFlight() {
   const flights = useContext(GlobalContext)
@@ -143,13 +144,17 @@ function BookFlight() {
                 Departure Date -{' '}
                 {!flights
                   ? null
-                  : flights.selectedFlight.departureDate.slice(0, 7)}
+                  : newDateFormat(
+                      flights.selectedFlight.departureDate.slice(0, 10)
+                    )}
               </Col>
               <Col className="mt-5" xs={12} md={6}>
                 Arrival Date -{' '}
                 {!flights
                   ? null
-                  : flights.selectedFlight.arrivalDate.slice(0, 7)}
+                  : newDateFormat(
+                      flights.selectedFlight.arrivalDate.slice(0, 10)
+                    )}
               </Col>
             </Row>
           </Col>
